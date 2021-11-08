@@ -29,7 +29,7 @@ public class weightRecorder extends AppCompatActivity {
             {
                 Random rand;
                 rand = new Random();
-                String weight = "Weight: "+(rand.nextInt(70) + 50);
+                String weight = ""+(rand.nextInt(70) + 50);
                 Intent sendWeight = new Intent(weightRecorder.this, MainActivity.class);
                 sendWeight.putExtra("weight",weight);
                 startActivity(sendWeight);

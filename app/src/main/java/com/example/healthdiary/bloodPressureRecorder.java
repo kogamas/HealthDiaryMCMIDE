@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +34,9 @@ public class bloodPressureRecorder extends AppCompatActivity {
                 String sys = ""+(rand.nextInt(150) + 90);
                 String dia = ""+(rand.nextInt(100) + 50);
                 Intent sendBP = new Intent(bloodPressureRecorder.this, MainActivity.class);
-                sendBP.putExtra("last","BP: "+sys+"/"+dia);
+                sendBP.putExtra("sys",sys);
+                sendBP.putExtra("dia",dia);
+                Log.i("BPrec: Rand", "BP: "+sys + "/" + dia);
                 startActivity(sendBP);
             }
         });
@@ -52,6 +55,7 @@ public class bloodPressureRecorder extends AppCompatActivity {
                     Intent sendBP = new Intent(bloodPressureRecorder.this, MainActivity.class);
                     sendBP.putExtra("sys",sys);
                     sendBP.putExtra("dia",dia);
+                    Log.i("BPrec: Manual", "BP: "+sys + "/" + dia);
                     startActivity(sendBP);
                 }
                 //do weight

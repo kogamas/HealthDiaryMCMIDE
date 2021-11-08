@@ -22,7 +22,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_DATABASE);
     }
 
-    String CREATE_DATABASE = "CREATE TABLE mytable(_id INTEGER PRIMARY KEY AUTOINCREMENT, weight INTEGER, sys INTEGER, dia INTEGER)";
+    String CREATE_DATABASE = "CREATE TABLE mytable(_id INTEGER PRIMARY KEY AUTOINCREMENT,timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, weight INTEGER, sys INTEGER, dia INTEGER)";
     String DROP_DATABASE = "DROP TABLE IF EXISTS mytable";
 
 }

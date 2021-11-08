@@ -2,7 +2,9 @@ package com.example.healthdiary;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,13 +19,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MyOpenHelper databaseDAO = new MyOpenHelper(this,"appDb",null,1);
-        final SQLiteDatabase writableDatabase = databaseDAO.getWritableDatabase();
+        MyOpenHelper databaseHelper = new MyOpenHelper(this,"appDb",null,2);
+        final SQLiteDatabase writableDatabase = databaseHelper.getWritableDatabase();
         final Button weightButton = (Button) findViewById(R.id.button);
         final Button bloodPressureButton = (Button) findViewById(R.id.button2);
-
-        TextView lastRecording = (TextView) findViewById(R.id.textViewLastRecording);
-        //lastRecording.setText(getIntent().getStringExtra("last"));
+     //   String lastRecording;
+    //    lastRecording = getIntent().getStringExtra("last");
 
 
 
@@ -53,18 +54,35 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent().hasExtra("weight")) {
             Intent intent = getIntent();
             String message = intent.getStringExtra("weight");
-            int weight = Integer.getInteger(message);
-            Log.i("Main:", "weight: "+weight);
+            int weight = Integer.parseInt(message);
+            Log.i("Main:", "weight: "+message);
+            ContentValues writePair = new ContentValues();
+            writePair.put("weight",weight);
+            writableDatabase.insert("mytable","null",writePair);
             }
         else if (getIntent().hasExtra("sys")) {
             Intent intent = getIntent();
-            int sys = Integer.getInteger(intent.getStringExtra("sys"));
-            int dia = Integer.getInteger(intent.getStringExtra("dia"));
+            String messageSys = intent.getStringExtra("sys");
+            String messageDia = intent.getStringExtra("dia");
+            int sys = Integer.parseInt(messageSys);
+            int dia = Integer.parseInt(messageDia);
             Log.i("Main:", "BP: "+sys + "/" + dia);
+
+            ContentValues writePair = new ContentValues();
+            writePair.put("sys",sys);
+            writePair.put("dia",dia);
+            writableDatabase.insert("mytable","null",writePair);
             }
 
-            // TextView textView = findViewById(R.id.textViewLastRecording);
-           // textView.setText(message);
+/*            TextView textView = findViewById(R.id.textViewLastRecording);
+
+        Cursor cursor = writableDatabase.rawQuery("select AVG(weight) from mytable",null);
+        if (cursor.moveToFirst()) {
+            String message = cursor.getString(cursor.getColumnIndex("weight"));
+            Log.i("Main: Database:", "AVG weight: "+message);
+            textView.setText("Average: "+message);
+        }*/
+
 
 
     }
